@@ -259,6 +259,40 @@ class HorizonOrchestrator:
                 summarizer = DailySummarizer()
                 summary = await summarizer.generate_summary(important_items, today, len(all_items), language=lang)
 
+                # Generate tech deep-dive section (for Chinese summaries)
+                if lang == "zh":
+                    try:
+                        self.console.print("[cyan]\u03a9 Generating tech deep-dive section...[/cyan]")
+                        ai_client_dd = create_ai_client(self.config.ai)
+                        tech_dd_prompt = (
+                            "\u4f60\u662f\u4e00\u4f4d\u8d44\u6df1\u6280\u672f\u4e13\u5bb6\uff0c"
+                            "\u8bf7\u968f\u673a\u9009\u62e9\u4e00\u4e2a\u5f53\u524d\u8ba1\u7b97\u673a\u9886\u57df\u7684\u70ed\u95e8\u8bed\u8a00\u3001\u6846\u67b6\u3001\u5de5\u5177\u6216\u6280\u672f\uff0c"
+                            "\u7f16\u5199\u4e00\u7bc7\u8be6\u7ec6\u7684\u6280\u672f\u89e3\u6790\u3002\u5185\u5bb9\u8981\u6c42\uff1a\n"
+                            "1. \u4ecb\u7ecd\u8be5\u6280\u672f\u7684\u80cc\u666f\u548c\u5b9a\u4f4d\n"
+                            "2. \u6838\u5fc3\u7279\u6027\u548c\u539f\u7406\u89e3\u6790\n"
+                            "3. \u5b9e\u9645\u5e94\u7528\u573a\u666f\u548c\u6700\u4f73\u5b9e\u8df5\n"
+                            "4. \u4e0e\u540c\u7c7b\u6280\u672f\u7684\u5bf9\u6bd4\u5206\u6790\n"
+                            "5. \u672a\u6765\u53d1\u5c55\u8d8b\u52bf\u548c\u5b66\u4e60\u5efa\u8bae\n"
+                            "\u5185\u5bb9\u8981\u6df1\u5165\uff0c800-1500\u5b57\u5de6\u53f3\uff0c\u4f7f\u7528\u4e2d\u6587\u3002"
+                        )
+                        dd_response = await ai_client_dd.complete(
+                            "\u4f60\u662f\u4e00\u4f4d\u64c5\u957f\u7528\u6df1\u5165\u6d45\u51fa\u7684\u65b9\u5f0f\u8bb2\u89e3\u6280\u672f\u6982\u5ff5\u7684\u8d44\u6df1\u5de5\u7a0b\u5e08\u3002",
+                            tech_dd_prompt,
+                            temperature=0.5,
+                            max_tokens=4096,
+                        )
+                        # The client returns the response text directly
+                        if hasattr(dd_response, 'content'):
+                            dd_text = dd_response.content
+                        elif isinstance(dd_response, str):
+                            dd_text = dd_response
+                        else:
+                            dd_text = str(dd_response)
+                        summary = await summarizer.generate_summary(important_items, today, len(all_items), language=lang, tech_deep_dive=dd_text)
+                        self.console.print("[green]\u2713 Tech deep-dive appended[/green]")
+                    except Exception as e:
+                        self.console.print(f"[yellow]\u26a0\ufe0f Failed to generate tech deep-dive: {e}[/yellow]")
+
                 # Save to data/summaries/
                 summary_path = self.storage.save_daily_summary(today, summary, language=lang)
                 self.console.print(f"💾 Saved {lang.upper()} summary to: {summary_path}\n")

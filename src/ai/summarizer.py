@@ -101,6 +101,7 @@ class DailySummarizer:
         date: str,
         total_fetched: int,
         language: str = "en",
+        tech_deep_dive: str = "",
     ) -> str:
         """Generate daily summary in Markdown format.
 
@@ -139,7 +140,16 @@ class DailySummarizer:
 
         parts = [self._format_item(item, labels, language, i + 1) for i, item in enumerate(items)]
 
-        return header + toc + "".join(parts)
+        result = header + toc + "".join(parts)
+
+        # Append tech deep-dive section
+        if tech_deep_dive and tech_deep_dive.strip():
+            dd = tech_deep_dive.strip()
+            if not dd.startswith("##"):
+                dd = "## \u6280\u672f\u4e13\u9898\n\n" + dd
+            result += "\n\n---\n\n" + dd
+
+        return result
 
     def generate_webhook_overview(
         self,
