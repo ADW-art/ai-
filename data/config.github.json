@@ -6,9 +6,9 @@
     "base_url": "https://api.deepseek.com",
     "api_key_env": "DEEPSEEK_API_KEY",
     "temperature": 0.3,
-    "max_tokens": 8192,
+    "max_tokens": 16384,
     "throttle_sec": 0.5,
-    "analysis_concurrency": 5,
+    "analysis_concurrency": 3,
     "enrichment_concurrency": 4,
     "languages": [
       "zh"
@@ -406,12 +406,12 @@
     ]
   },
   "filtering": {
-    "ai_score_threshold": 5.0,
+    "ai_score_threshold": 5.5,
     "time_window_hours": 24,
-    "max_items": 30,
+    "max_items": 15,
     "category_groups": {
       "agent": {
-        "limit": 12,
+        "limit": 6,
         "categories": [
           "agent",
           "ai",
@@ -420,7 +420,7 @@
         ]
       },
       "security": {
-        "limit": 8,
+        "limit": 5,
         "categories": [
           "security",
           "hacking",
@@ -429,7 +429,7 @@
         ]
       },
       "tech": {
-        "limit": 7,
+        "limit": 3,
         "categories": [
           "tech",
           "linux",
@@ -438,7 +438,7 @@
         ]
       },
       "other": {
-        "limit": 3,
+        "limit": 1,
         "categories": [
           "news",
           "general"
