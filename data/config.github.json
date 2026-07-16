@@ -9,7 +9,7 @@
     "max_tokens": 8192,
     "throttle_sec": 0.5,
     "analysis_concurrency": 5,
-    "enrichment_concurrency": 3,
+    "enrichment_concurrency": 4,
     "languages": [
       "zh"
     ]
@@ -22,8 +22,56 @@
     },
     "rss": [
       {
+        "name": "LangChain Blog",
+        "url": "https://blog.langchain.dev/feed/",
+        "enabled": true,
+        "category": "agent"
+      },
+      {
+        "name": "LangGraph Blog",
+        "url": "https://blog.langchain.dev/langgraph/feed/",
+        "enabled": true,
+        "category": "agent"
+      },
+      {
+        "name": "CrewAI Blog",
+        "url": "https://www.crewai.com/blog/rss.xml",
+        "enabled": true,
+        "category": "agent"
+      },
+      {
         "name": "Simon Willison",
         "url": "https://simonwillison.net/atom/everything/",
+        "enabled": true,
+        "category": "ai"
+      },
+      {
+        "name": "Lilian Weng (OpenAI)",
+        "url": "https://lilianweng.github.io/feed.xml",
+        "enabled": true,
+        "category": "ai"
+      },
+      {
+        "name": "The Verge - AI",
+        "url": "https://www.theverge.com/ai-artificial-intelligence/rss/index.xml",
+        "enabled": true,
+        "category": "ai"
+      },
+      {
+        "name": "InfoQ - AI/ML",
+        "url": "https://feed.infoq.com/artificial-intelligence",
+        "enabled": true,
+        "category": "ai"
+      },
+      {
+        "name": "Vercel AI SDK Blog",
+        "url": "https://sdk.vercel.ai/blog/feed.xml",
+        "enabled": true,
+        "category": "agent"
+      },
+      {
+        "name": "Anthropic Blog",
+        "url": "https://www.anthropic.com/feed.xml",
         "enabled": true,
         "category": "ai"
       },
@@ -52,38 +100,62 @@
         "category": "security"
       },
       {
-        "name": "GitHub Trending Daily",
+        "name": "Unit42 (Palo Alto)",
+        "url": "https://unit42.paloaltonetworks.com/feed/",
+        "enabled": true,
+        "category": "security"
+      },
+      {
+        "name": "Exploit-DB",
+        "url": "https://www.exploit-db.com/rss.xml",
+        "enabled": true,
+        "category": "security"
+      },
+      {
+        "name": "SANS ISC Diary",
+        "url": "https://isc.sans.edu/diaryrss.xml",
+        "enabled": true,
+        "category": "security"
+      },
+      {
+        "name": "NVD (CVE)",
+        "url": "https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss.xml",
+        "enabled": true,
+        "category": "security"
+      },
+      {
+        "name": "GitHub Trending (Daily)",
         "url": "https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml",
         "enabled": true,
-        "category": "tech"
-      },
-      {
-        "name": "The Verge - AI",
-        "url": "https://www.theverge.com/ai-artificial-intelligence/rss/index.xml",
-        "enabled": true,
-        "category": "ai"
-      },
-      {
-        "name": "InfoQ - AI/ML",
-        "url": "https://feed.infoq.com/artificial-intelligence",
-        "enabled": true,
-        "category": "ai"
-      },
-      {
-        "name": "InfoQ 中文",
-        "url": "https://feed.infoq.cn/",
-        "enabled": true,
-        "category": "tech"
-      },
-      {
-        "name": "Hacker News 中文精选",
-        "url": "https://hn.algolia.com/rss?q=chinese&hitsPerPage=20",
-        "enabled": true,
-        "category": "tech"
+        "category": "github-trending"
       },
       {
         "name": "GitHub Trending (Weekly)",
         "url": "https://mshibanami.github.io/GitHubTrendingRSS/weekly/all.xml",
+        "enabled": true,
+        "category": "github-trending"
+      },
+      {
+        "name": "Ars Technica",
+        "url": "https://feeds.arstechnica.com/arstechnica/index",
+        "enabled": true,
+        "category": "tech"
+      },
+      {
+        "name": "TechCrunch",
+        "url": "https://techcrunch.com/feed/",
+        "enabled": true,
+        "category": "tech"
+      },
+      {
+        "name": "Phoronix (Linux)",
+        "url": "https://www.phoronix.com/rss.php",
+        "enabled": true,
+        "category": "tech"
+      },
+      {
+        "name": "InfoQ 中文",
+        "url": "https://feed.infoq.cn/",
         "enabled": true,
         "category": "tech"
       },
@@ -94,14 +166,8 @@
         "category": "tech"
       },
       {
-        "name": "Solidot (科技资讯)",
+        "name": "Solidot",
         "url": "https://www.solidot.org/index.rss",
-        "enabled": true,
-        "category": "tech"
-      },
-      {
-        "name": "TechCrunch",
-        "url": "https://techcrunch.com/feed/",
         "enabled": true,
         "category": "tech"
       },
@@ -122,12 +188,52 @@
       "enabled": true,
       "subreddits": [
         {
+          "subreddit": "AI_Agents",
+          "enabled": true,
+          "sort": "hot",
+          "time_filter": "day",
+          "fetch_limit": 20,
+          "min_score": 5
+        },
+        {
+          "subreddit": "MachineLearning",
+          "enabled": true,
+          "sort": "hot",
+          "time_filter": "day",
+          "fetch_limit": 20,
+          "min_score": 20
+        },
+        {
+          "subreddit": "LocalLLaMA",
+          "enabled": true,
+          "sort": "hot",
+          "time_filter": "day",
+          "fetch_limit": 15,
+          "min_score": 10
+        },
+        {
+          "subreddit": "ClaudeAI",
+          "enabled": true,
+          "sort": "hot",
+          "time_filter": "day",
+          "fetch_limit": 15,
+          "min_score": 5
+        },
+        {
+          "subreddit": "artificial",
+          "enabled": true,
+          "sort": "hot",
+          "time_filter": "day",
+          "fetch_limit": 15,
+          "min_score": 10
+        },
+        {
           "subreddit": "netsec",
           "enabled": true,
           "sort": "hot",
           "time_filter": "day",
           "fetch_limit": 15,
-          "min_score": 20
+          "min_score": 10
         },
         {
           "subreddit": "cybersecurity",
@@ -135,7 +241,7 @@
           "sort": "hot",
           "time_filter": "day",
           "fetch_limit": 15,
-          "min_score": 20
+          "min_score": 10
         },
         {
           "subreddit": "redteamsec",
@@ -146,20 +252,20 @@
           "min_score": 5
         },
         {
-          "subreddit": "MachineLearning",
+          "subreddit": "hacking",
           "enabled": true,
           "sort": "hot",
           "time_filter": "day",
-          "fetch_limit": 15,
-          "min_score": 30
+          "fetch_limit": 10,
+          "min_score": 5
         },
         {
-          "subreddit": "LocalLLaMA",
+          "subreddit": "exploits",
           "enabled": true,
           "sort": "hot",
           "time_filter": "day",
-          "fetch_limit": 15,
-          "min_score": 20
+          "fetch_limit": 10,
+          "min_score": 5
         },
         {
           "subreddit": "programming",
@@ -168,6 +274,14 @@
           "time_filter": "day",
           "fetch_limit": 10,
           "min_score": 100
+        },
+        {
+          "subreddit": "opensource",
+          "enabled": true,
+          "sort": "hot",
+          "time_filter": "day",
+          "fetch_limit": 10,
+          "min_score": 50
         }
       ],
       "users": [],
@@ -175,37 +289,74 @@
     },
     "github": [
       {
-        "type": "user_events",
-        "username": "karpathy",
-        "enabled": true
-      },
-      {
         "type": "repo_releases",
         "owner": "langchain-ai",
         "repo": "langchain",
         "enabled": true,
-        "category": "ai"
+        "category": "agent"
       },
       {
         "type": "repo_releases",
         "owner": "langchain-ai",
         "repo": "langgraph",
         "enabled": true,
-        "category": "ai"
+        "category": "agent"
       },
       {
         "type": "repo_releases",
         "owner": "microsoft",
         "repo": "autogen",
         "enabled": true,
-        "category": "ai"
+        "category": "agent"
       },
       {
         "type": "repo_releases",
         "owner": "crewAIInc",
         "repo": "crewAI",
         "enabled": true,
-        "category": "ai"
+        "category": "agent"
+      },
+      {
+        "type": "repo_releases",
+        "owner": "n8n-io",
+        "repo": "n8n",
+        "enabled": true,
+        "category": "agent"
+      },
+      {
+        "type": "repo_releases",
+        "owner": "microsoft",
+        "repo": "semantic-kernel",
+        "enabled": true,
+        "category": "agent"
+      },
+      {
+        "type": "repo_releases",
+        "owner": "agno-agi",
+        "repo": "agno",
+        "enabled": true,
+        "category": "agent"
+      },
+      {
+        "type": "repo_releases",
+        "owner": "langgenius",
+        "repo": "dify",
+        "enabled": true,
+        "category": "agent"
+      },
+      {
+        "type": "repo_releases",
+        "owner": "run-llama",
+        "repo": "llama_index",
+        "enabled": true,
+        "category": "agent"
+      },
+      {
+        "type": "repo_releases",
+        "owner": "deepset-ai",
+        "repo": "haystack",
+        "enabled": true,
+        "category": "agent"
       },
       {
         "type": "repo_releases",
@@ -216,33 +367,81 @@
       },
       {
         "type": "repo_releases",
-        "owner": "vllm-project",
-        "repo": "vllm",
+        "owner": "anthropics",
+        "repo": "anthropic-sdk-python",
+        "enabled": true,
+        "category": "ai"
+      },
+      {
+        "type": "repo_releases",
+        "owner": "Significant-Gravitas",
+        "repo": "AutoGPT",
+        "enabled": true,
+        "category": "agent"
+      },
+      {
+        "type": "repo_releases",
+        "owner": "browserbase",
+        "repo": "stagehand",
+        "enabled": true,
+        "category": "agent"
+      },
+      {
+        "type": "repo_releases",
+        "owner": "astral-sh",
+        "repo": "uv",
+        "enabled": true,
+        "category": "tech"
+      },
+      {
+        "type": "user_events",
+        "username": "karpathy",
+        "enabled": true
+      },
+      {
+        "type": "user_events",
+        "username": "Thysrael",
         "enabled": true
       }
     ]
   },
   "filtering": {
-    "ai_score_threshold": 6.0,
+    "ai_score_threshold": 5.0,
     "time_window_hours": 24,
-    "max_items": 20,
+    "max_items": 30,
     "category_groups": {
-      "security": {
-        "limit": 7,
+      "agent": {
+        "limit": 12,
         "categories": [
-          "security"
+          "agent",
+          "ai",
+          "llm",
+          "machine-learning"
         ]
       },
-      "ai": {
-        "limit": 7,
+      "security": {
+        "limit": 8,
         "categories": [
-          "ai"
+          "security",
+          "hacking",
+          "pentest",
+          "redteam"
         ]
       },
       "tech": {
-        "limit": 6,
+        "limit": 7,
         "categories": [
-          "tech"
+          "tech",
+          "linux",
+          "programming",
+          "github-trending"
+        ]
+      },
+      "other": {
+        "limit": 3,
+        "categories": [
+          "news",
+          "general"
         ]
       }
     },
