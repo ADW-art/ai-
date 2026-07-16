@@ -396,6 +396,7 @@ class WebhookNotifier:
         date: str,
         lang: str,
         summarizer: DailySummarizer,
+        summary: str = "",
     ) -> dict[str, Any]:
         """Build a single Feishu Card JSON 2.0 message with collapsed item details."""
         overview = self._build_feishu_collapsible_overview(
@@ -423,6 +424,20 @@ class WebhookNotifier:
                 )
             )
 
+        # Append tech deep-dive to summary if present
+        if summary:
+            import re as _re
+            m = _re.search(r"## \u6280\u672f\u4e13\u9898\n(.*?)$", summary, _re.DOTALL)
+            if m:
+                tech = m.group(1).strip()
+                if len(tech) > 3000:
+                    tech = tech[:3000] + "..."
+                elements.append({"tag": "hr"})
+                elements.append({
+                    "tag": "markdown",
+                    "content": f"**\u6280\u672f\u4e13\u9898**\n\n{tech}"
+                })
+        
         return {
             "msg_type": "interactive",
             "card": {
@@ -435,7 +450,7 @@ class WebhookNotifier:
                     "title": {
                         "tag": "plain_text",
                         "content": (
-                            f"Horizon {date} 折叠日报"
+                            f"Horizon {date} \u6298\u53e0\u65e5\u62a5"
                             if lang == "zh"
                             else f"Horizon {date} Collapsible Daily"
                         ),
@@ -502,6 +517,7 @@ class WebhookNotifier:
                         date=date,
                         lang=lang,
                         summarizer=summarizer,
+                        summary=summary,
                     ),
                 }
             ]
