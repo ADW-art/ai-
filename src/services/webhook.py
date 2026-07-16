@@ -427,7 +427,7 @@ class WebhookNotifier:
         # Append tech deep-dive to summary if present
         if summary:
             import re as _re
-            m = _re.search(r"## \u6280\u672f\u4e13\u9898\n(.*?)$", summary, _re.DOTALL)
+            m = _re.search(r"## 技术专题\n(.*?)$", summary, _re.DOTALL)
             if m:
                 tech = m.group(1).strip()
                 if len(tech) > 3000:
@@ -435,7 +435,7 @@ class WebhookNotifier:
                 elements.append({"tag": "hr"})
                 elements.append({
                     "tag": "markdown",
-                    "content": f"**\u6280\u672f\u4e13\u9898**\n\n{tech}"
+                    "content": f"**技术专题**\n\n{tech}"
                 })
         
         return {
