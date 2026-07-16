@@ -9,7 +9,10 @@
     "max_tokens": 8192,
     "throttle_sec": 0.5,
     "analysis_concurrency": 5,
-    "enrichment_concurrency": 3
+    "enrichment_concurrency": 3,
+    "languages": [
+      "zh"
+    ]
   },
   "sources": {
     "hackernews": {
@@ -65,6 +68,54 @@
         "url": "https://feed.infoq.com/artificial-intelligence",
         "enabled": true,
         "category": "ai"
+      },
+      {
+        "name": "InfoQ 中文",
+        "url": "https://feed.infoq.cn/",
+        "enabled": true,
+        "category": "tech"
+      },
+      {
+        "name": "Hacker News 中文精选",
+        "url": "https://hn.algolia.com/rss?q=chinese&hitsPerPage=20",
+        "enabled": true,
+        "category": "tech"
+      },
+      {
+        "name": "GitHub Trending (Weekly)",
+        "url": "https://mshibanami.github.io/GitHubTrendingRSS/weekly/all.xml",
+        "enabled": true,
+        "category": "tech"
+      },
+      {
+        "name": "OSCHINA",
+        "url": "https://www.oschina.net/news/rss",
+        "enabled": true,
+        "category": "tech"
+      },
+      {
+        "name": "Solidot (科技资讯)",
+        "url": "https://www.solidot.org/index.rss",
+        "enabled": true,
+        "category": "tech"
+      },
+      {
+        "name": "TechCrunch",
+        "url": "https://techcrunch.com/feed/",
+        "enabled": true,
+        "category": "tech"
+      },
+      {
+        "name": "Wired",
+        "url": "https://www.wired.com/feed/rss",
+        "enabled": true,
+        "category": "tech"
+      },
+      {
+        "name": "The Register",
+        "url": "https://www.theregister.com/headlines.rss",
+        "enabled": true,
+        "category": "tech"
       }
     ],
     "reddit": {
