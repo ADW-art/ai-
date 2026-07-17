@@ -9,7 +9,7 @@ on:
 
 jobs:
   daily-summary:
-    runs-on: ubuntu-24.04
+    runs-on: windows-latest
     permissions:
       contents: write  # Needed to commit changes
 
@@ -26,7 +26,7 @@ jobs:
         uses: astral-sh/setup-uv@v8
 
       - name: Install dependencies
-        run: uv sync
+        run: uv pip install -e .
 
       - name: Prepare GitHub Actions config
         run: cp data/config.github.json data/config.json
