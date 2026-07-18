@@ -7,6 +7,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Literal, Optional
 from urllib.parse import unquote_plus, urlsplit
 import httpx
+import os
 from rich.console import Console
 
 from .models import Config, ContentItem
@@ -263,20 +264,30 @@ class HorizonOrchestrator:
                 if lang == "zh":
                     try:
                         self.console.print("[cyan]\u03a9 Generating tech deep-dive...[/cyan]")
-                        ai_client_dd = create_ai_client(self.config.ai)
-                        dd_response = await ai_client_dd.complete(
-                            "\u4f60\u662f\u4e00\u4f4d\u64c5\u957f\u7528\u6df1\u5165\u6d45\u51fa\u7684\u65b9\u5f0f\u8bb2\u89e3\u6280\u672f\u6982\u5ff5\u7684\u8d44\u6df1\u5de5\u7a0b\u5e08\u3002",
-                            "\u968f\u673a\u9009\u4e00\u4e2a\u8ba1\u7b97\u673a\u8bed\u8a00/\u6846\u67b6/\u5de5\u5177\uff0c\u7528\u4e2d\u6587\u5199800-1500\u5b57\u8be6\u7ec6\u4ecb\u7ecd\uff1a\n1. \u80cc\u666f\u548c\u5b9a\u4f4d\n2. \u6838\u5fc3\u539f\u7406\n3. \u5e94\u7528\u573a\u666f\n4. \u540c\u7c7b\u5bf9\u6bd4\n5. \u5b66\u4e60\u5efa\u8bae",
-                            temperature=0.5,
-                            max_tokens=4096,
-                        )
-                        dd_text = dd_response if isinstance(dd_response, str) else (dd_response.content if hasattr(dd_response, 'content') else str(dd_response))
-                        if dd_text and dd_text.strip():
-                            # Directly append to summary string - no regex, no second generate_summary
-                            summary += "\n\n---\n\n## \u6280\u672f\u4e13\u9898\n\n" + dd_text.strip()
-                            self.console.print("[green]\u2713 Tech deep-dive appended (simple method)[/green]")
+                        async with httpx.AsyncClient(timeout=60.0) as dd_client:
+                            dd_resp = await dd_client.post(
+                                "https://api.deepseek.com/v1/chat/completions",
+                                headers={
+                                    "Authorization": f"Bearer {os.environ.get('DEEPSEEK_API_KEY', '')}",
+                                    "Content-Type": "application/json",
+                                },
+                                json={
+                                    "model": "deepseek-chat",
+                                    "messages": [
+                                        {"role": "system", "content": "\u4f60\u662f\u4e00\u4f4d\u64c5\u957f\u7528\u6df1\u5165\u6d45\u51fa\u7684\u65b9\u5f0f\u8bb2\u89e3\u6280\u672f\u6982\u5ff5\u7684\u8d44\u6df1\u5de5\u7a0b\u5e08\u3002"},
+                                        {"role": "user", "content": "\u968f\u673a\u9009\u4e00\u4e2a\u8ba1\u7b97\u673a\u8bed\u8a00/\u6846\u67b6/\u5de5\u5177\uff0c\u7528\u4e2d\u6587\u5199800-1500\u5b57\u8be6\u7ec6\u4ecb\u7ecd\uff1a\n1. \u80cc\u666f\u548c\u5b9a\u4f4d\n2. \u6838\u5fc3\u539f\u7406\n3. \u5e94\u7528\u573a\u666f\n4. \u540c\u7c7b\u5bf9\u6bd4\n5. \u5b66\u4e60\u5efa\u8bae"},
+                                    ],
+                                    "temperature": 0.5,
+                                    "max_tokens": 4096,
+                                },
+                            )
+                            dd_data = dd_resp.json()
+                            dd_text = dd_data["choices"][0]["message"]["content"]
+                            if dd_text and dd_text.strip():
+                                summary += "\n\n---\n\n## \u6280\u672f\u4e13\u9898\n\n" + dd_text.strip()
+                                self.console.print("[green]\u2713 Tech deep-dive appended (direct API)[/green]")
                     except Exception as e:
-                        self.console.print(f"[yellow]\u26a0\ufe0f Failed to generate tech deep-dive: {e}[/yellow]")
+                        self.console.print(f"[yellow]\u26a0\ufe0f Failed: {e}[/yellow]")
 
                 # Save to data/summaries/
                 summary_path = self.storage.save_daily_summary(today, summary, language=lang)
