@@ -1,4 +1,4 @@
-"""AI prompts for content analysis and summarization."""
+﻿"""AI prompts for content analysis and summarization."""
 
 TOPIC_DEDUP_SYSTEM = """You are a news deduplication assistant. Identify groups of news items that cover the exact same real-world event, release, or announcement.
 
