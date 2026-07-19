@@ -38,6 +38,18 @@ jobs:
       - name: Set current date as environment variable
         run: echo "DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
 
+      - name: Commit summaries to repo
+        run: |
+          mkdir -p summaries
+          cp data/summaries/*.md summaries/
+          git config user.name "Horizon Bot"
+          git config user.email "horizon-bot@users.noreply.github.com"
+          git add summaries/
+          git commit -m "Add daily summaries for ${{ env.DATE }}" || echo "No new summaries"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
