@@ -406,12 +406,12 @@
     ]
   },
   "filtering": {
-    "ai_score_threshold": 5.5,
+    "ai_score_threshold": 5.0,
     "time_window_hours": 24,
-    "max_items": 15,
+    "max_items": 20,
     "category_groups": {
       "agent": {
-        "limit": 6,
+        "limit": 8,
         "categories": [
           "agent",
           "ai",
@@ -420,7 +420,7 @@
         ]
       },
       "security": {
-        "limit": 5,
+        "limit": 6,
         "categories": [
           "security",
           "hacking",
@@ -429,7 +429,7 @@
         ]
       },
       "tech": {
-        "limit": 3,
+        "limit": 4,
         "categories": [
           "tech",
           "linux",
@@ -438,7 +438,7 @@
         ]
       },
       "other": {
-        "limit": 1,
+        "limit": 2,
         "categories": [
           "news",
           "general"
